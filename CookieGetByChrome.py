@@ -24,10 +24,10 @@ httphead={'User-Agent':'Safari/537.36',}
 
 #设置allow_redirects为真，访问http://my.taobao.com/ 可以跟随跳转到个人空间
 r=requests.get(url,headers=httphead,cookies=getcookiefromchrome('.taobao.com'),allow_redirects=1).content
-with open("D:/备份/来尔佳昵/旗舰店/销售数据报表-下载/订单数据/销售/biaobiao.xls","wb") as f:
+with open("E:/Cook/git_pro/myPython/biaobiao.xls","wb") as f:
     f.write(r)
 
-data = xlrd.open_workbook('D:/备份/来尔佳昵/旗舰店/销售数据报表-下载/订单数据/销售/biaobiao.xls')
+data = xlrd.open_workbook('E:/Cook/git_pro/myPython/biaobiao.xls')
 table = data.sheets()[0]
 row = table.nrows
 col = table.ncols
