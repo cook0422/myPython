@@ -28,8 +28,9 @@ class autoLoadReports(object):
     Repots = []
 
 
-    def __init__(self,file = "d:/"):       #初始化报表任务List
-        self.filepath = file
+    def __init__(self,file = "E:/Cook/git_pro/myPython/"):       #初始化报表任务List
+        self.filepath = file if os.path.exists(file) else "d:/"
+        self.filepath = self.filepath + ("" if self.filepath[-1] == "/" else "/")
         html = requests.get(self.ReportsListUlr,headers = self.httphead, cookies = self.cookies).content
         list_json = json.loads(html)
         for rp in list_json['data']:
@@ -59,7 +60,7 @@ class autoLoadReports(object):
             else:
                     import time
                     file_name = print (time.strftime("%Y-%m-%d %H%M%S", time.localtime()))
-            with open("E:/Cook/git_pro/myPython/" + file_name,"wb") as f:
+            with open(self.filepath + file_name,"wb") as f:
                 f.write(req.content)
 
 
@@ -72,5 +73,5 @@ class report(object):
         self.reportName = name
 
 
-test = autoLoadReports('E:/Cook/git_pro/myPython/')
-test.loadReports()
+test = autoLoadReports('E:/Cook/git_pro/myPython')
+print(test.filepath)
