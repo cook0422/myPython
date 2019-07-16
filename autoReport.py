@@ -51,17 +51,15 @@ class autoLoadReports(object):
     def loadReports(self):
         for rp in self.Repots:
             req=requests.get(self.ReportsDloadtUlr % rp.reportID,headers=self.httphead,cookies= self.cookies)
-            requst_headers = json.loads(json.dumps(dict(req.headers)))
-            file_name = re.search('filename=(.*)\"',requst_headers['Content-disposition'])
-            if file_name:
-                    file_name = file_name.group(1).replace("\\","").replace("\"","")      
-                    print(file_name)  
-                    file_name = urllib.parse.unquote(file_name,encoding='gb2312')
-            else:
-                    import time
-                    file_name = print (time.strftime("%Y-%m-%d %H%M%S", time.localtime()))
+            #requst_headers = json.loads(json.dumps(dict(req.headers)))
+            #file_name = re.search('filename=(.*)\"',requst_headers['Content-disposition'])
+            #file_name = file_name.group(1).replace("\\","").replace("\"","")  
+            import time
+            file_name = rp.reportName + time.strftime("%Y-%m-%d %H%M%S", time.localtime()) + ".xls"
+            file_name = urllib.parse.unquote(file_name,encoding='gb2312')
             with open(self.filepath + file_name,"wb") as f:
                 f.write(req.content)
+            print(file_name + "   ------> 下载成功")  
 
 
 """
@@ -72,6 +70,8 @@ class report(object):
         self.reportID = id
         self.reportName = name
 
-
+print("-------start donwnload----------")
+input("请按回车后开始下载报表...")
 test = autoLoadReports('E:/Cook/git_pro/myPython')
-print(test.filepath)
+test.loadReports()
+input("-------download done !----------")
