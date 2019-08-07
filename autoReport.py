@@ -28,8 +28,9 @@ class autoLoadReports(object):
     Repots = []
 
 
-    def __init__(self,file = "E:/Cook/git_pro/myPython/"):       #初始化报表任务List
-        self.filepath = file if os.path.exists(file) else "d:/"
+    def __init__(self,file = "Y:\运营资料\报表"):       #初始化报表任务List
+        self.filepath = file.replace("\\","/")
+        self.filepath = self.filepath if os.path.exists(self.filepath) else "d:/"
         self.filepath = self.filepath + ("" if self.filepath[-1] == "/" else "/")
         html = requests.get(self.ReportsListUlr,headers = self.httphead, cookies = self.cookies).content
         list_json = json.loads(html)
@@ -72,6 +73,6 @@ class report(object):
 
 print("-------start donwnload----------")
 input("请按回车后开始下载报表...")
-test = autoLoadReports('E:/Cook/git_pro/myPython')
+test = autoLoadReports('Y:\运营资料\报表')
 test.loadReports()
 input("-------download done !----------")
