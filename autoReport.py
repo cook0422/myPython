@@ -38,6 +38,7 @@ class autoLoadReports(object):
             temp_rp:report = report(str(rp['id']),rp['name'])
             self.Repots.append(temp_rp)
 
+
     #下载预览报表
     def loadViewReports(self):
         for rp in self.Repots:
@@ -58,9 +59,13 @@ class autoLoadReports(object):
             import time
             file_name = rp.reportName + time.strftime("%Y-%m-%d %H%M%S", time.localtime()) + ".xls"
             file_name = urllib.parse.unquote(file_name,encoding='gb2312')
-            with open(self.filepath + file_name,"wb") as f:
+            single_path = os.path.join(self.filepath,rp.reportName)
+            if not os.path.exists(single_path):
+                os.mkdir(single_path)
+            with open(single_path + "/" + file_name,"wb") as f:
                 f.write(req.content)
             print(file_name + "   ------> 下载成功")  
+
 
 
 """
