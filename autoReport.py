@@ -27,7 +27,6 @@ class autoLoadReports(object):
     ReportsDloadtUlr = 'https://sycm.taobao.com/adm/v2/downloadById.do?id=%s&reportType=1'              #下载报表地址
     Repots = []
 
-
     def __init__(self,file = "Y:\运营资料\报表"):       #初始化报表任务List
         self.filepath = file.replace("\\","/")
         self.filepath = self.filepath if os.path.exists(self.filepath) else "d:/"
@@ -77,7 +76,6 @@ class report(object):
         self.reportName = name
 
 print("-------start donwnload----------")
-input("请按回车后开始下载报表...")
-test = autoLoadReports('Y:\运营资料\报表')
+test = autoLoadReports('E:\Cook\git_pro\PBI\来尔佳昵\生意参谋')
 test.loadReports()
-input("-------download done !----------")
+print("-------download done !----------")
