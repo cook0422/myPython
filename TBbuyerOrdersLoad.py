@@ -25,15 +25,19 @@ def set_clipboard(aString):#写入剪切板
     w.CloseClipboard()  
 
 class loadOrder(object):
-    httphead = {'User-Agent':'Safari/537.36','accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',}
-    cookies = getcookiefromchrome()
+    httphead = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36',
+    'accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+    'Cookie': '请手动输入cookie',}
     order_list_url = "https://buyertrade.taobao.com/trade/itemlist/list_bought_items.htm?action=itemlist/BoughtQueryAction&event_submit_do_query=1&tabCode=waitConfirm"
     express_url = "https://detail.i56.taobao.com/trace/trace_detail.htm?"
     express_url_pattern =r"tId=[0-9]{5,20}&userId=[0-9]{5,15}"
 
+    def __init__(self):
+        self.cookies = getcookiefromchrome(".taobao.com")
+        print("初始化cookies")
 
     def getOrders(self):
-        html = requests.get(self.order_list_url,headers = self.httphead, cookies = self.cookies).content.decode('gbk')
+        html = requests.get(self.order_list_url,headers = self.httphead).content.decode('gbk')
         html = html.replace("trade_id","tId").replace("seller_id","userId")
         exporess_search = re.findall(self.express_url_pattern,html)
         result = ""
@@ -49,3 +53,5 @@ class loadOrder(object):
 
 test = loadOrder()
 test.getOrders()
+
+
